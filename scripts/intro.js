@@ -12,11 +12,10 @@ class StartScene extends Phaser.Scene{
     
     create(){
         this.add.image(200, 200, 'bgazul').setScale(4.4);
-        this.add.image(200, 200, 'logo').setScale(2);
+        this.add.image(200, 150, 'logo').setScale(4);
         this.add.image(200, 300, 'botao').setScale(1.2).setInteractive().on(Phaser.Input.Events.GAMEOBJECT_POINTER_DOWN, () =>{
             this.scene.stop("StartScene");
             this.scene.start("PlayScene");
             })
-        ;
     }
 }

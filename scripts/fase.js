@@ -1,5 +1,6 @@
 var cursors;
 var player;
+var andando;
 class PlayScene extends Phaser.Scene{
     constructor(){
         super({key: 'PlayScene',
@@ -30,24 +31,27 @@ class PlayScene extends Phaser.Scene{
         var plataforma1 = this.physics.add.staticImage(50, 300, 'plataforma');
         var plataforma2 = this.physics.add.staticImage(200, 250, 'plataforma');
         var plataforma3 = this.physics.add.staticImage(300, 200, 'plataforma');
-        var plataforma4 = this.physics.add.staticImage(200, 100, 'plataforma');
+        var plataforma4 = this.physics.add.staticImage(150, 150, 'plataforma');
+        var nuvem = this.physics.add.staticImage(50, 100, 'nuvem');
         //Instanciando Player
         player = this.physics.add.sprite(300, 250, 'player')
         .setCollideWorldBounds(true)
         .setScale(0.3);
         //Animações
-        this.anims.create({
+        player.anims.create({
 
             key: 'idle',
             frames: this.anims.generateFrameNumbers('player', {start: 0, end: 0}),
-            frameRate: 10
+            frameRate: 10,
+            repeat: -1
 
         });
-        this.anims.create({
+        player.anims.create({
 
             key: 'walk',
             frames: this.anims.generateFrameNumbers('player', {start: 1, end: 3}),
-            frameRate: 10
+            frameRate: 10,
+            repeat: -1
 
         });
         //Física
@@ -55,9 +59,14 @@ class PlayScene extends Phaser.Scene{
         for(var i = 0; i<plataformas.length; i++){
             this.physics.add.collider(player, plataformas[i]);
         }
+        this.physics.add.overlap(player, nuvem, () => {
+            this.scene.stop('PlayScene');
+            this.scene.start('EndScene');
+        });
     }
+    
     update(){
-        if(cursors.up.isDown){
+        if(cursors.up.isDown && player.body.touching.down){
             player.setVelocityY(-200);
             var releaseJump = true;
         }else{
@@ -66,9 +75,25 @@ class PlayScene extends Phaser.Scene{
                 releaseJump = false;
             }
         }
+
+        if (cursors.left.isDown){
+            player.setVelocityX(-100);
+            player.setFlipX(true);
+            animado();
+        }else if(cursors.right.isDown){
+            player.setVelocityX(100);
+            player.setFlipX(false);
+            animado();
+        }else{
+            player.setVelocityX(0);
+            player.anims.play("idle");
+            andando = false;
+        }
     }
-
-
-
 }
-
+function animado(){
+    if (!andando){
+        andando = true;
+        player.anims.play("walk");
+    }
+}

@@ -3,7 +3,7 @@ var config = {
     width: 400,
     height: 400,
 
-    scene: [StartScene, PlayScene],
+    scene: [StartScene, PlayScene, EndScene],
     
 };
 
