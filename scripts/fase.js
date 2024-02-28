@@ -1,4 +1,5 @@
 var cursors;
+var player;
 class PlayScene extends Phaser.Scene{
     constructor(){
         super({key: 'PlayScene',
@@ -31,7 +32,7 @@ class PlayScene extends Phaser.Scene{
         var plataforma3 = this.physics.add.staticImage(300, 200, 'plataforma');
         var plataforma4 = this.physics.add.staticImage(200, 100, 'plataforma');
         //Instanciando Player
-        var player = this.physics.add.sprite(300, 250, 'player')
+        player = this.physics.add.sprite(300, 250, 'player')
         .setCollideWorldBounds(true)
         .setScale(0.3);
         //Animações
@@ -53,6 +54,17 @@ class PlayScene extends Phaser.Scene{
         var plataformas = [plataforma1, plataforma2, plataforma3, plataforma4, chao];
         for(var i = 0; i<plataformas.length; i++){
             this.physics.add.collider(player, plataformas[i]);
+        }
+    }
+    update(){
+        if(cursors.up.isDown){
+            player.setVelocityY(-200);
+            var releaseJump = true;
+        }else{
+            if(releaseJump){
+                player.setVelocityY(0);
+                releaseJump = false;
+            }
         }
     }
 
