@@ -5,9 +5,9 @@ class StartScene extends Phaser.Scene{
     }
 
     preload(){
-        this.load.image('bgazul', 'StickManJump/assets/fundo.png');
-        this.load.image('botao', 'StickManJump/assets/play.png');
-        this.load.image('logo', 'StickManJump/assets/logo.png');
+        this.load.image('bgazul', 'assets/fundo.png');
+        this.load.image('botao', 'assets/play.png');
+        this.load.image('logo', 'assets/logo.png');
     }
     
     create(){
