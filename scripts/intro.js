@@ -3,13 +3,13 @@ class StartScene extends Phaser.Scene{
         super({key: 'StartScene'})
         
     }
-
+    //carregando arquivos
     preload(){
         this.load.image('bgazul', '/assets/fundo.PNG');
         this.load.image('botao', '/assets/play.PNG');
         this.load.image('logo', '/assets/logo.PNG');
     }
-    
+    //adicionando fundo, logo, e funcionalidade do botão
     create(){
         this.add.image(200, 200, 'bgazul').setScale(4.4);
         this.add.image(200, 150, 'logo').setScale(4);

@@ -1,6 +1,8 @@
 var cursors;
 var player;
 var andando;
+var pontos = 0;
+var pontoTexto;
 class PlayScene extends Phaser.Scene{
     constructor(){
         super({key: 'PlayScene',
@@ -16,13 +18,15 @@ class PlayScene extends Phaser.Scene{
 
     //Carregando recursos
     preload(){
-        this.load.image('bgazul', '../assets/fundo.png');
-        this.load.spritesheet('player', '../assets/playerAnim.png', {frameWidth: 128, frameHeight: 128});
-        this.load.image('nuvem', '../assets/nuvem.png');
-        this.load.image('plataforma', '../assets/plataforma.png');
-        this.load.image('chao', '../assets/chao.png');
+        this.load.image('bgazul', '/assets/fundo.png');
+        this.load.spritesheet('player', '/assets/playerAnim.png', {frameWidth: 128, frameHeight: 128});
+        this.load.image('nuvem', '/assets/nuvem.png');
+        this.load.image('plataforma', '/assets/plataforma.png');
+        this.load.image('chao', '/assets/chao.png');
+        this.load.image('moeda', '/assets/coin.png');
     }
     create(){
+
         //Adicionando input de teclado
         cursors = this.input.keyboard.createCursorKeys();
         //Instanciando Cenário
@@ -33,6 +37,12 @@ class PlayScene extends Phaser.Scene{
         var plataforma3 = this.physics.add.staticImage(300, 200, 'plataforma');
         var plataforma4 = this.physics.add.staticImage(150, 150, 'plataforma');
         var nuvem = this.physics.add.staticImage(50, 100, 'nuvem');
+        var moeda1 = this.physics.add.image(100, 300, 'moeda').setBounce(0.3);
+        var moeda2 = this.physics.add.image(200, 200, 'moeda').setBounce(0.3);
+        var moeda3 = this.physics.add.image(300, 150, 'moeda').setBounce(0.3);
+        var moeda4 = this.physics.add.image(150, 100, 'moeda').setBounce(0.3);
+        //Instanciando texto de placar
+        pontoTexto = this.add.text(16, 16, 'Pontos: 0', {fontSize: '16x', fill: '#000'});
         //Instanciando Player
         player = this.physics.add.sprite(300, 250, 'player')
         .setCollideWorldBounds(true)
@@ -55,27 +65,60 @@ class PlayScene extends Phaser.Scene{
 
         });
         //Física
+        var moedas = [moeda1, moeda2, moeda3,moeda4]
         var plataformas = [plataforma1, plataforma2, plataforma3, plataforma4, chao];
         for(var i = 0; i<plataformas.length; i++){
             this.physics.add.collider(player, plataformas[i]);
         }
+
+        for (var j = 0; j<moedas.length; j++){
+            for(var i = 0; i<plataformas.length; i++){
+                this.physics.add.collider(moedas[j], plataformas[i]);
+            }
+        }
+        
         this.physics.add.overlap(player, nuvem, () => {
+            pontos = 0;
             this.scene.stop('PlayScene');
             this.scene.start('EndScene');
         });
+        this.physics.add.overlap(player, moeda1, () => {
+            pontos += 1;
+            moeda1.disableBody(true, true);
+            pontoTexto.setText ("Pontos: "+ pontos);
+        });
+        this.physics.add.overlap(player, moeda2, () => {
+            pontos += 1;
+            moeda2.disableBody(true, true);
+            pontoTexto.setText ("Pontos: "+ pontos);
+        });
+        this.physics.add.overlap(player, moeda3, () => {
+            pontos += 1;
+            moeda3.disableBody(true, true);
+            pontoTexto.setText ("Pontos: "+ pontos);
+        });
+        this.physics.add.overlap(player, moeda4, () => {
+            pontos += 1;
+            moeda4.disableBody(true, true);
+            pontoTexto.setText ("Pontos: "+ pontos);
+        });
+        
+        
     }
     
     update(){
+        //verifica se player pode pular quando se aperta setinha para cima
         if(cursors.up.isDown && player.body.touching.down){
             player.setVelocityY(-200);
             var releaseJump = true;
         }else{
+            // Bota a velocidade em 0 apenas no momento que gravidade aplica; Se não fizer esse check, velocidade vertical é constantemente zerada
             if(releaseJump){
                 player.setVelocityY(0);
                 releaseJump = false;
             }
         }
-
+        //movimento lateral e chamado da animação
         if (cursors.left.isDown){
             player.setVelocityX(-100);
             player.setFlipX(true);
@@ -91,6 +134,7 @@ class PlayScene extends Phaser.Scene{
         }
     }
 }
+//funcão para chamar a animação apenas uma vez
 function animado(){
     if (!andando){
         andando = true;
