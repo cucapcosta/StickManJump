@@ -10,7 +10,7 @@ class PlayScene extends Phaser.Scene{
             default: 'arcade',
             arcade:{
                 gravity: {y: 300},
-                debug: true
+                debug: false
             }
         }})
         
