@@ -5,9 +5,9 @@ class StartScene extends Phaser.Scene{
     }
     //carregando arquivos
     preload(){
-        this.load.image('bgazul', '/assets/fundo.PNG');
-        this.load.image('botao', '/assets/play.PNG');
-        this.load.image('logo', '/assets/logo.PNG');
+        this.load.image('bgazul', '/assets/fundo.png');
+        this.load.image('botao', '/assets/play.png');
+        this.load.image('logo', '/assets/logo.png');
     }
     //adicionando fundo, logo, e funcionalidade do botão
     create(){
