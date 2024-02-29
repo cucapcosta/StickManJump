@@ -5,8 +5,8 @@ class EndScene extends Phaser.Scene{
     }
     //carregando arquivos
     preload(){
-        this.load.image('fundofim', '/assets/endscreen.png');
-        this.load.image('botao', '/assets/play.png');
+        this.load.image('fundofim', './assets/endscreen.png');
+        this.load.image('botao', './assets/play.png');
         console.log('funcionou');
     }
     //adicionando fundo e botão de recomeçar o jogo
