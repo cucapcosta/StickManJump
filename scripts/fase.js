@@ -18,12 +18,12 @@ class PlayScene extends Phaser.Scene{
 
     //Carregando recursos
     preload(){
-        this.load.image('bgazul', 'StickManGame/assets/fundo.png');
-        this.load.spritesheet('player', 'StickManGame/assets/playerAnim.png', {frameWidth: 128, frameHeight: 128});
-        this.load.image('nuvem', 'StickManGame/assets/nuvem.png');
-        this.load.image('plataforma', 'StickManGame/assets/plataforma.png');
-        this.load.image('chao', 'StickManGame/assets/chao.png');
-        this.load.image('moeda', 'StickManGame/assets/coin.png');
+        this.load.image('bgazul', 'StickManJump/assets/fundo.png');
+        this.load.spritesheet('player', 'StickManJump/assets/playerAnim.png', {frameWidth: 128, frameHeight: 128});
+        this.load.image('nuvem', 'StickManJump/assets/nuvem.png');
+        this.load.image('plataforma', 'StickManJump/assets/plataforma.png');
+        this.load.image('chao', 'StickManJump/assets/chao.png');
+        this.load.image('moeda', 'StickManJump/assets/coin.png');
     }
     create(){
 
